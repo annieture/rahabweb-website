@@ -1,0 +1,73 @@
+<%- include('layout', { body: `
+<div class="hero">
+    <h1>تماس با ما</h1>
+    <p>سؤالات خود را بپرسید و ما به شما پاسخ خواهیم داد</p>
+</div>
+
+<section style="max-width: 800px;">
+    <h2>فرم تماس</h2>
+    <form id="contactForm" style="background: #f8fafc; padding: 2rem; border-radius: 8px;">
+        <div class="form-group">
+            <label for="name">نام کامل:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">آدرس ایمیل:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="subject">موضوع:</label>
+            <input type="text" id="subject" name="subject" required>
+        </div>
+        <div class="form-group">
+            <label for="message">پیام:</label>
+            <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">ارسال پیام</button>
+    </form>
+    <div id="messageDiv" style="margin-top: 2rem; padding: 1rem; border-radius: 8px; display: none;"></div>
+</section>
+
+<section style="background-color: #f8fafc;">
+    <h2>اطلاعات تماس</h2>
+    <div class="services-grid">
+        <div class="service-card">
+            <h3>📧 ایمیل</h3>
+            <p><a href="mailto:info@rahabweb.ir" style="color: #1e40af; text-decoration: none;">info@rahabweb.ir</a></p>
+        </div>
+        <div class="service-card">
+            <h3>📞 تلفن</h3>
+            <p><a href="tel:+989123456789" style="color: #1e40af; text-decoration: none;">۰۹۱۲۳۴۵۶۷۸۹</a></p>
+        </div>
+        <div class="service-card">
+            <h3>📍 آدرس</h3>
+            <p>تهران، خیابان انقلاب، پلاک ۱۲۳</p>
+        </div>
+    </div>
+</section>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(document.getElementById('contactForm'));
+    const data = Object.fromEntries(formData);
+    
+    try {
+        const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const result = await response.json();
+        const msgDiv = document.getElementById('messageDiv');
+        msgDiv.textContent = result.message;
+        msgDiv.style.display = 'block';
+        msgDiv.style.backgroundColor = result.success ? '#d1fae5' : '#fee2e2';
+        msgDiv.style.color = result.success ? '#065f46' : '#7f1d1d';
+        if (result.success) document.getElementById('contactForm').reset();
+    } catch (error) {
+        console.error(error);
+    }
+});
+</script>
+` }) %>

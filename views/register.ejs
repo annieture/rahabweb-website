@@ -1,0 +1,105 @@
+<%- include('layout', { body: `
+<div class="hero">
+    <h1>ثبت‌نام برای خدمات</h1>
+    <p>پکیج مناسب برای کسب‌وکار خود را انتخاب کنید</p>
+</div>
+
+<section style="max-width: 900px;">
+    <h2>انتخاب پکیج خدمات</h2>
+    <% if (packages && packages.length > 0) { %>
+        <div class="services-grid" style="margin-bottom: 3rem;">
+            <% packages.forEach(pkg => { %>
+                <div class="service-card" style="cursor: pointer; border: 3px solid transparent;" onclick="selectPackage(<%= pkg.id %>, '<%= pkg.title %>')">
+                    <h3><%= pkg.title %></h3>
+                    <p><%= pkg.description %></p>
+                    <% if (pkg.features) { %>
+                        <div style="font-size: 0.9rem; color: #64748b; margin: 1rem 0;">
+                            <strong>ویژگی‌ها:</strong>
+                            <p><%= pkg.features %></p>
+                        </div>
+                    <% } %>
+                    <p class="price"><%= pkg.price ? pkg.price + ' تومان' : 'قابل توافق' %></p>
+                </div>
+            <% }); %>
+        </div>
+    <% } %>
+
+    <h2>فرم ثبت‌نام</h2>
+    <form id="registerForm" style="background: #f8fafc; padding: 2rem; border-radius: 8px; max-width: 600px;">
+        <div class="form-group">
+            <label for="name">نام کامل:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">آدرس ایمیل:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">شماره تلفن:</label>
+            <input type="tel" id="phone" name="phone" required>
+        </div>
+        <div class="form-group">
+            <label for="company">نام شرکت/کسب‌وکار:</label>
+            <input type="text" id="company" name="company" required>
+        </div>
+        <div class="form-group">
+            <label for="package_id">پکیج انتخابی:</label>
+            <select id="package_id" name="package_id" required>
+                <option value="">انتخاب کنید</option>
+                <% if (packages && packages.length > 0) { %>
+                    <% packages.forEach(pkg => { %>
+                        <option value="<%= pkg.id %>"><%= pkg.title %></option>
+                    <% }); %>
+                <% } %>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">ثبت‌نام و مشاهده قیمت</button>
+    </form>
+    <div id="messageDiv" style="margin-top: 2rem; padding: 1rem; border-radius: 8px; display: none;"></div>
+</section>
+
+<script>
+function selectPackage(id, title) {
+    document.getElementById('package_id').value = id;
+    document.querySelector('html, body').scrollTop = document.getElementById('registerForm').offsetTop - 100;
+}
+
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(document.getElementById('registerForm'));
+    const data = Object.fromEntries(formData);
+    
+    try {
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const result = await response.json();
+        const msgDiv = document.getElementById('messageDiv');
+        
+        if (result.success) {
+            msgDiv.innerHTML = `
+                <h3>✓ ثبت‌نام موفق!</h3>
+                <p>سلام ${data.name}!</p>
+                <p>ثبت‌نام شما با موفقیت انجام شد.</p>
+                <p><strong>پکیج:</strong> ${data.package_id}</p>
+                <p><strong>هزینه:</strong> ${result.package ? result.package.price + ' تومان' : 'قابل توافق'}</p>
+                <p>تیم ما به زودی با شما تماس خواهند گرفت.</p>
+                <p style="margin-top: 2rem; color: #059669;"><strong>شماره درخواست: #${result.userId}</strong></p>
+            `;
+            msgDiv.style.backgroundColor = '#d1fae5';
+            msgDiv.style.color = '#065f46';
+            document.getElementById('registerForm').reset();
+        } else {
+            msgDiv.textContent = result.message;
+            msgDiv.style.backgroundColor = '#fee2e2';
+            msgDiv.style.color = '#7f1d1d';
+        }
+        msgDiv.style.display = 'block';
+    } catch (error) {
+        console.error(error);
+    }
+});
+</script>
+` }) %>

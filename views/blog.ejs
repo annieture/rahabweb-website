@@ -1,0 +1,29 @@
+<%- include('layout', { body: `
+<div class="hero">
+    <h1>مقالات و اخبار</h1>
+    <p>آخرین مقالات درباره فناوری و دیجیتال مارکتینگ</p>
+</div>
+
+<section>
+    <% if (articles && articles.length > 0) { %>
+        <div class="articles-grid">
+            <% articles.forEach(article => { %>
+                <div class="article-card">
+                    <% if (article.image_url) { %>
+                        <img src="<%= article.image_url %>" alt="<%= article.title %>">
+                    <% } %>
+                    <h3><%= article.title %></h3>
+                    <p style="font-size: 0.9rem; color: #64748b; padding: 0 1.5rem;"><%= article.content.substring(0, 100) %>...</p>
+                    <div style="padding: 1.5rem;">
+                        <p style="font-size: 0.85rem; color: #f59e0b;"><%= article.category %></p>
+                        <p style="font-size: 0.85rem; color: #64748b;">۱۴۰۴</p>
+                        <a href="/blog/<%= article.id %>" class="btn btn-primary" style="margin-top: 1rem;">مطالعه مقاله</a>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <p style="text-align: center; color: #64748b;">مقالتی موجود نیست</p>
+    <% } %>
+</section>
+` }) %>

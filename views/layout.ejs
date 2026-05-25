@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'رهاوب - طراحی وب، توسعه نرم افزار، دیجیتال مارکتینگ' %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">رهاوب</a>
+            <ul>
+                <li><a href="/">خانه</a></li>
+                <li><a href="/about">درباره</a></li>
+                <li><a href="/services">خدمات</a></li>
+                <li><a href="/portfolio">نمونه‌کارها</a></li>
+                <li><a href="/blog">مقالات</a></li>
+                <li><a href="/contact">تماس</a></li>
+                <li><a href="/register" class="btn btn-primary" style="padding: 0.5rem 1rem; margin-top: 0.25rem;">ثبت‌نام</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <%- body %>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>درباره ما</h4>
+                <p>شرکت رهاوب متخصص در طراحی وب، توسعه نرم‌افزار و دیجیتال مارکتینگ است.</p>
+            </div>
+            <div class="footer-section">
+                <h4>خدمات</h4>
+                <ul>
+                    <li><a href="/services">طراحی وب</a></li>
+                    <li><a href="/services">توسعه نرم‌افزار</a></li>
+                    <li><a href="/services">دیجیتال مارکتینگ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>لینک‌های سریع</h4>
+                <ul>
+                    <li><a href="/portfolio">نمونه‌کارها</a></li>
+                    <li><a href="/blog">مقالات</a></li>
+                    <li><a href="/contact">تماس با ما</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>تماس</h4>
+                <p>ایمیل: info@rahabweb.ir</p>
+                <p>تلفن: ۰۹۱۲۳۴۵۶۷۸۹</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 رهاوب. تمام حقوق محفوظ است.</p>
+        </div>
+    </footer>
+</body>
+</html>

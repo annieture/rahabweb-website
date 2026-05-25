@@ -1,0 +1,26 @@
+<%- include('layout', { body: `
+<div class="hero">
+    <h1><%= package.title %></h1>
+    <p>جزئیات و قیمت پکیج</p>
+</div>
+
+<section style="max-width: 600px;">
+    <div style="background: linear-gradient(135deg, #1e40af 0%, #059669 100%); color: white; padding: 2rem; border-radius: 8px; text-align: center;">
+        <h2 style="font-size: 2rem;"><%= package.title %></h2>
+        <p style="margin: 1rem 0; font-size: 1.1rem;"><%= package.description %></p>
+        <div style="font-size: 3rem; font-weight: bold; margin: 2rem 0;">
+            <%= package.price ? package.price + ' تومان' : 'قابل توافق' %>
+        </div>
+        <% if (package.features) { %>
+            <div style="margin: 2rem 0; text-align: right;">
+                <h3 style="margin-bottom: 1rem;">ویژگی‌های این پکیج:</h3>
+                <p style="line-height: 2; font-size: 1.1rem;"><%= package.features %></p>
+            </div>
+        <% } %>
+        <a href="/register" class="btn btn-primary" style="background-color: #f59e0b; margin-top: 2rem;">ثبت‌نام برای این پکیج</a>
+    </div>
+    <div style="margin-top: 3rem;">
+        <p style="text-align: center; color: #64748b;">برای اطلاعات بیشتر یا سؤالات خود <a href="/contact" style="color: #1e40af;">با ما تماس بگیرید</a></p>
+    </div>
+</section>
+` }) %>

@@ -1,0 +1,28 @@
+<%- include('layout', { body: `
+<div class="hero">
+    <h1>نمونه‌کارهای ما</h1>
+    <p>پروژه‌های موفق و اجرا‌شده</p>
+</div>
+
+<section>
+    <div class="portfolio-grid">
+        <% if (portfolio && portfolio.length > 0) { %>
+            <% portfolio.forEach(item => { %>
+                <div class="portfolio-item">
+                    <img src="<%= item.image_url %>" alt="<%= item.title %>">
+                    <div class="portfolio-item-info">
+                        <h3><%= item.title %></h3>
+                        <p><%= item.description %></p>
+                        <p style="font-size: 0.85rem; color: #f59e0b; margin-top: 0.5rem;"><%= item.category %></p>
+                        <% if (item.link) { %>
+                            <a href="<%= item.link %>" target="_blank" class="btn btn-primary" style="margin-top: 1rem;">مشاهده پروژه</a>
+                        <% } %>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p style="text-align: center; grid-column: 1/-1; color: #64748b;">نمونه‌کاری موجود نیست</p>
+        <% } %>
+    </div>
+</section>
+` }) %>
